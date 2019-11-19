@@ -5,12 +5,13 @@
  */
 package com.jrmouro.operator.generator;
 
-import com.jrmouro.operator.Operator;
+import com.jrmouro.operator.simple.Operator;
 
 /**
  *
  * @author ronaldo
  */
 public interface Generator {
-    public Operator generate();
+    public Operator generate(Operator[] operators);
+    //public Operator[] operators();
 }

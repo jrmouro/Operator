@@ -5,9 +5,10 @@
  */
 package com.jrmouro.test;
 
-import com.jrmouro.operator.PlotOp;
-import com.jrmouro.operator.PolOp;
-import com.jrmouro.operator.Var;
+import com.jrmouro.operator.plot.PlotOp;
+import com.jrmouro.operator.polynom.PolExpOp;
+import com.jrmouro.operator.polynom.PolOp;
+import com.jrmouro.operator.simple.Var;
 import org.junit.Test;
 
 /**
@@ -20,7 +21,7 @@ public class PolOpJUnitTest1 {
     public void text() {
     
         
-        PolOp op = new PolOp(new Var("x"), 3);
+        PolOp op = new PolOp(new Var("x"), 4);
         
         //Operator op = new Exp();
         //op.add(new ConstOp(2.0));
@@ -32,7 +33,40 @@ public class PolOpJUnitTest1 {
         System.out.println(op.aval());
         
         
-        PlotOp plot = new PlotOp(op);
+        PlotOp plot = new PlotOp(
+                op,
+                "PolOp",
+                "x",
+                "y",
+                -5.0,
+                5.0,
+                -5.0,
+                5.0);
+        plot.plot();
+        
+        
+        
+        PolExpOp opx = new PolExpOp(new Var("x"), 4);
+        
+        //Operator op = new Exp();
+        //op.add(new ConstOp(2.0));
+        //op.add(new ConstOp(3.0));
+        
+        System.out.println(opx);        
+        System.out.println(opx.aval());
+        System.out.println(opx.aval(10.0));
+        System.out.println(opx.aval());
+        
+        
+        plot = new PlotOp(
+                opx,
+                "PolOp",
+                "x",
+                "y",
+                -5.0,
+                5.0,
+                -5.0,
+                5.0);
         plot.plot();
     
     }

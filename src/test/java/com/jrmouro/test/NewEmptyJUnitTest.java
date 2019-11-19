@@ -6,19 +6,19 @@
 package com.jrmouro.test;
 
 import com.jrmouro.operator.generator.BinaryTreeGenerator;
-import com.jrmouro.operator.ConstOp;
-import com.jrmouro.operator.Div;
-import com.jrmouro.operator.Exp;
+import com.jrmouro.operator.simple.ConstOp;
+import com.jrmouro.operator.simple.Div;
+import com.jrmouro.operator.simple.Exp;
 import com.jrmouro.operator.generator.Generator;
-import com.jrmouro.operator.Ln;
-import com.jrmouro.operator.Log;
-import com.jrmouro.operator.Mul;
-import com.jrmouro.operator.Operator;
-import com.jrmouro.operator.Sin;
-import com.jrmouro.operator.Sub;
-import com.jrmouro.operator.Sum;
-import com.jrmouro.operator.Var;
-import com.jrmouro.operator.VarOp;
+import com.jrmouro.operator.simple.Ln;
+import com.jrmouro.operator.simple.Log;
+import com.jrmouro.operator.simple.Mul;
+import com.jrmouro.operator.simple.Operator;
+import com.jrmouro.operator.simple.Sin;
+import com.jrmouro.operator.simple.Sub;
+import com.jrmouro.operator.simple.Sum;
+import com.jrmouro.operator.simple.Var;
+import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.plot.CanonicalPath;
 import com.jrmouro.plot.FunctionPlottable;
 import com.jrmouro.plot.Plottable;
@@ -73,9 +73,9 @@ public class NewEmptyJUnitTest {
         
         Collections.shuffle(Arrays.asList(ops));
         
-        Generator ge = new BinaryTreeGenerator(8, ops);
+        Generator ge = new BinaryTreeGenerator(8);
         
-        Operator po = ge.generate();
+        Operator po = ge.generate(ops);
         
         System.out.println(po);
         System.out.println("x = 0 -> " + po.aval());

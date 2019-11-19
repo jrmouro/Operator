@@ -5,18 +5,18 @@
  */
 package com.jrmouro.test;
 
-import com.jrmouro.operator.ConstOp;
-import com.jrmouro.operator.Div;
-import com.jrmouro.operator.Exp;
-import com.jrmouro.operator.Ln;
-import com.jrmouro.operator.Log;
-import com.jrmouro.operator.Mul;
-import com.jrmouro.operator.Operator;
-import com.jrmouro.operator.Sin;
-import com.jrmouro.operator.Sub;
-import com.jrmouro.operator.Sum;
-import com.jrmouro.operator.Var;
-import com.jrmouro.operator.VarOp;
+import com.jrmouro.operator.simple.ConstOp;
+import com.jrmouro.operator.simple.Div;
+import com.jrmouro.operator.simple.Exp;
+import com.jrmouro.operator.simple.Ln;
+import com.jrmouro.operator.simple.Log;
+import com.jrmouro.operator.simple.Mul;
+import com.jrmouro.operator.simple.Operator;
+import com.jrmouro.operator.simple.Sin;
+import com.jrmouro.operator.simple.Sub;
+import com.jrmouro.operator.simple.Sum;
+import com.jrmouro.operator.simple.Var;
+import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.operator.generator.BinaryTreeGenerator;
 import com.jrmouro.operator.generator.Generator;
 import org.junit.Test;
@@ -70,9 +70,9 @@ public class TreeJUnitTest1 {
         };
         
     
-        Generator g = new BinaryTreeGenerator(5, ops);
+        Generator g = new BinaryTreeGenerator(5);
         
-        System.out.println(g.generate());
+        System.out.println(g.generate(ops));
         
         
     }

@@ -5,7 +5,7 @@
  */
 package com.jrmouro.operator.generator;
 
-import com.jrmouro.operator.Operator;
+import com.jrmouro.operator.simple.Operator;
 
 /**
  *
@@ -13,8 +13,8 @@ import com.jrmouro.operator.Operator;
  */
 public class BinaryTreeGenerator extends TreeGenerator{
 
-    public BinaryTreeGenerator(Integer height, Operator[] vector) {
-        super(2, height, vector);
+    public BinaryTreeGenerator(Integer height) {
+        super(2, height);
     }
     
 }

@@ -5,23 +5,25 @@
  */
 package com.jrmouro.test;
 
-import com.jrmouro.genetic.integer.ChromosomeIntegerValidity;
 import com.jrmouro.genetic.integer.CompositeStoppingCondition;
-import com.jrmouro.genetic.integer.VectorPointsIntegerCrossover;
-import com.jrmouro.operator.ConstOp;
-import com.jrmouro.operator.Cos;
-import com.jrmouro.operator.Div;
-import com.jrmouro.operator.Exp;
-import com.jrmouro.operator.GenOp;
-import com.jrmouro.operator.Ln;
-import com.jrmouro.operator.Log;
-import com.jrmouro.operator.Mul;
-import com.jrmouro.operator.Operator;
-import com.jrmouro.operator.PlotOp;
-import com.jrmouro.operator.Sin;
-import com.jrmouro.operator.Sub;
-import com.jrmouro.operator.Sum;
-import com.jrmouro.operator.Var;
+import com.jrmouro.genetic.integer.IntegerCrossover;
+import com.jrmouro.operator.simple.ConstOp;
+import com.jrmouro.operator.simple.Cos;
+import com.jrmouro.operator.simple.Div;
+import com.jrmouro.operator.simple.Exp;
+import com.jrmouro.operator.genetic.GenOpCoeffOp;
+import com.jrmouro.operator.simple.Ln;
+import com.jrmouro.operator.simple.Mul;
+import com.jrmouro.operator.simple.Operator;
+import com.jrmouro.operator.plot.PlotOp;
+import com.jrmouro.operator.genetic.RangeValidity;
+import com.jrmouro.operator.simple.Sin;
+import com.jrmouro.operator.simple.Sub;
+import com.jrmouro.operator.simple.Sum;
+import com.jrmouro.operator.simple.Var;
+import com.jrmouro.operator.simple.VarOp;
+import com.jrmouro.operator.generator.Generator;
+import com.jrmouro.operator.generator.TreeGenerator;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -46,6 +48,58 @@ public class GenOpJUnitTest {
             {90, 14.39},
             {100, 13.31}
         };
+        
+        
+        
+        double[][] data3 = {
+            {1.0, 2.0},
+            {2.0, 3.0},
+            {3.0, 5.0},
+            {4.0, 7.0},
+            {5.0, 11.0},
+            {6.0, 13.0},
+            {7.0, 17.0},
+            {8.0, 19.0},
+            {9.0, 23.0},
+            {10.0, 29.0},
+            {11.0, 31.0},
+            {12.0, 37.0},
+            {13.0, 41.0},
+        };
+        
+        double[][] data4 = {
+            {1.0, 2.0},
+            {2.0, 3.0},
+            {3.0, 5.0},
+            {5.0, 7.0},
+            {7.0, 11.0},
+            {11.0, 13.0},
+            {13.0, 17.0},
+            {17.0, 19.0},
+            {19.0, 23.0},
+            {23.0, 29.0},
+            {29.0, 31.0},
+            {31.0, 37.0},
+            {37.0, 41.0},
+        };
+        
+        double[][] data5 = {
+            {1.0, 1.0},
+            {2.0, 2.0},
+            {3.0, 2.0},
+            {4.0, 4.0},
+            {5.0, 2.0},
+            {6.0, 4.0},
+            {7.0, 2.0},
+            {8.0, 4.0},
+            {9.0, 6.0},
+            {10.0, 2.0},
+            {11.0, 6.0},
+            {12.0, 4.0},
+            {13.0, 6.0},
+        };
+        
+        Var var = new Var("x");
 
         Operator[] ops = {
             new Sum(),
@@ -53,42 +107,80 @@ public class GenOpJUnitTest {
             new Div(),
             new Sub(),
             new Exp(),
-            new ConstOp(2.0),
             new Sin(),
             new Cos(),
-            new ConstOp(-1.0),
             new Ln(),
-            new Log()
+            new Sum(new VarOp(var)),
+            new Mul(new VarOp(var)),
+            new Div(new VarOp(var)),
+            new Sub(new VarOp(var)),
+            new Exp(new VarOp(var)),
+            new Sin(new VarOp(var)),
+            new Cos(new VarOp(var)),
+            new Ln(new VarOp(var)),
+            new VarOp(var),
+            new ConstOp(-1.0),
+            new ConstOp(0.1),
+            new ConstOp(2.0)           
         };
-
-        Var var = new Var("x");
         
-        Operator op = new GenOp(
+        
+
+        
+        
+
+        Generator generator = new TreeGenerator(2, 10);
+
+        double[] dom = {3.0, 13.0, 29.0};
+
+        Operator op = new GenOpCoeffOp(
                 var,
                 data,//data
                 ops,//operators
-                5,//height
-                2,//largura
+                generator,
                 50,//pop size
                 5,// por reuse
-                50,//pop limit
-                new ChromosomeIntegerValidity(),
-                40,//chrom. size
+                80,//pop limit
+                new RangeValidity(var, ops, generator, dom, 0.0, 50.0),
+                200,//chrom. size
                 0,//leftBoundChromosome,
                 Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                new CompositeStoppingCondition(300, -0.1),
-                new VectorPointsIntegerCrossover(100, 1),
+                new CompositeStoppingCondition(10000, -0.0001),
+                new IntegerCrossover(150),
                 0.5,//crossoverRate,
                 0.5,//mutationRate,
                 0.3,//mutationRateGene,
-                2// aritySelection
+                2,// aritySelection
+                3000,
+                100,
+                0.00001,
+                0.5
         );
+
+        System.out.println();
+        for (double[] ds : data) {
+            System.out.print(ds[0]);
+            System.out.print(" : ");
+            System.out.print(ds[1]);
+            System.out.print(" : ");
+            var.value = ds[0];
+            System.out.println(op.aval());
+        }
         
-        
+        System.out.println();
+
         System.out.println(op);
-        
-        PlotOp plot = new PlotOp(op);
-        plot.plot();
+
+        new PlotOp(
+                data,
+                op,
+                "Function",
+                "x",
+                "y",
+                0.0,
+                110.0,
+                0.0,
+                20.0).plot();
 
     }
 }

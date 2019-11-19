@@ -5,7 +5,7 @@
  */
 package com.jrmouro.operator.generator;
 
-import com.jrmouro.operator.Operator;
+import com.jrmouro.operator.simple.Operator;
 
 /**
  *
@@ -14,39 +14,41 @@ import com.jrmouro.operator.Operator;
 public class TreeGenerator implements Generator {
 
     final Integer height, nrChildren;
-    Operator[] vector = null;
+    //Operator[] vector = null;
 
+    /*public TreeGenerator(Integer nrChildren, Integer height) {
+        this.height = height;
+        this.nrChildren = nrChildren;
+    }*/
+    
     public TreeGenerator(Integer nrChildren, Integer height) {
         this.height = height;
         this.nrChildren = nrChildren;
-    }
-    
-    public TreeGenerator(Integer nrChildren, Integer height, Operator[] vector) {
-        this.height = height;
-        this.nrChildren = nrChildren;
-        this.vector = vector;
+        //this.vector = vector;
     }
 
+    
+    
     @Override
-    public Operator generate() {
-        if(this.vector != null)
-            return aux(-1, 0);
+    public Operator generate(Operator[] operators) {
+        if(operators != null)
+            return aux(operators, -1, 0);
         return null;
     }
 
-    private Operator aux(int h, int n) {
+    protected Operator aux(Operator[] operators, int h, int n) {
         
         Operator ret = null;
         
-        if (n < vector.length && h < this.height - 1) {
+        if (operators != null && n < operators.length && h < this.height - 1) {
 
-            ret = vector[n];
+            ret = operators[n];
 
             if (!ret.term()) {
                 
                 for (int i = 0; i < this.nrChildren; i++) {
                     
-                    Operator op = aux(h + 1, (this.nrChildren * n) + i + 1);
+                    Operator op = aux(operators, h + 1, (this.nrChildren * n) + i + 1);
                     
                     if(op != null)                    
                         ret.add(op);
@@ -59,5 +61,6 @@ public class TreeGenerator implements Generator {
         return ret;
 
     }
+
 
 }

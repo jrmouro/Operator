@@ -5,8 +5,8 @@
  */
 package com.jrmouro.operator.generator;
 
-import com.jrmouro.operator.Operator;
-import com.jrmouro.operator.Var;
+import com.jrmouro.operator.simple.Operator;
+import com.jrmouro.operator.simple.Var;
 
 /**
  *
@@ -14,8 +14,8 @@ import com.jrmouro.operator.Var;
  */
 public class TernaryGenerator extends TreeGenerator{
 
-    public TernaryGenerator(Integer height, Operator[] vector) {
-        super(3, height, vector);
+    public TernaryGenerator(Integer height) {
+        super(3, height);
     }
     
 }
