@@ -5,9 +5,9 @@
  */
 package com.jrmouro.operator.genetic;
 
+import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
 import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.coeff.Coeff;
-import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.generator.Generator;
 import java.io.IOException;

@@ -5,8 +5,7 @@
  */
 package com.jrmouro.operator.genetic;
 
-import com.jrmouro.genetic.integer.ChromosomeIntegerValidity;
-import com.jrmouro.operator.simple.Operator;
+import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.coeff.Coeff;
@@ -34,7 +33,7 @@ public class CoeffGenOp extends GenOp {
             int populationSize, 
             int populationReuse, 
             int populationLimit, 
-            ChromosomeIntegerValidity validity, 
+            ChromosomeAbstractValidity validity, 
             int sizeChromosome, 
             int leftBoundChromosome, 
             int rightBoundChromosome, 
