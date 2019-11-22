@@ -67,16 +67,13 @@ public abstract class SimpleFunctionOperator implements Operator {
 
     @Override
     public boolean term() {
+        //return (this.child != null);
         return false;
     }
 
     @Override
     public void add(Operator child) {
-        if(this.child == null/* || this.child.term()*/)
-            this.child = child;
-        //else
-            //this.child.add(child);
-        
+        this.child = child;        
     }
 
 }

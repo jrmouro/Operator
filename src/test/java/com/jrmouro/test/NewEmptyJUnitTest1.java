@@ -11,12 +11,7 @@ import com.jrmouro.operator.polynom.PolExpOpOp;
 import com.jrmouro.operator.simple.Sin;
 import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.simple.VarOp;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -24,24 +19,7 @@ import static org.junit.Assert.*;
  */
 public class NewEmptyJUnitTest1 {
     
-    public NewEmptyJUnitTest1() {
-    }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void hello() {

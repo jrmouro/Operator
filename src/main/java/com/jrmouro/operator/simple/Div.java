@@ -12,23 +12,28 @@ package com.jrmouro.operator.simple;
 public class Div  extends SimpleOperator{
 
     public Div() {
-        super("/", new ConstOp(1.0));
+        super("/");
     }    
     
     public Div(Operator... child) {
         super("/", child);
     }
 
+    public Div(int limit) {
+        super(limit, "/", new ConstOp(1.0));
+    }    
+    
+    public Div(int limit, Operator... child) {
+        super(limit, "/", child);
+    }
+    
     @Override
     public boolean validValues(double value1, double value2) {
         return value2 != 0.0;
-    }
-        
+    } 
     
     @Override
     public double operate(double value1, double value2) {
-        if(value2 == 0.0)
-            return value1;
         return value1 / value2;
     }
 
@@ -36,29 +41,5 @@ public class Div  extends SimpleOperator{
     public Operator getCopy() {
         return new Div();
     }
-    
-    @Override
-    final public String stringOperate(Operator... ops) {
-               
-        if(ops.length == 0)
-            return "";
-        
-        String ret = "(" + ops[0].toString();
-        
-        int i = 1;       
-        
-        for (; i < ops.length - 1; i++) {    
-            if(ops[i].aval() != 0.0)
-                ret += op + ops[i].toString();
-        }
-        
-        if(i < ops.length && ops[i].aval() != 0.0)
-            ret += op + ops[i].toString() + ")";
-        else
-            ret += ")";
-        
-        return ret;
-        
-    }
-    
+            
 }

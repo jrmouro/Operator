@@ -19,7 +19,7 @@ public class CoeffOp extends RefOp{
     final Operator op;
     
     public CoeffOp(Coeff coeff, Operator coeffOp, Operator op) {
-        super(coeffOp.getCopy());
+        super(coeffOp);
         this.op = op;
         this.coeff = coeff;
         this.child.add(coeff);
@@ -28,7 +28,7 @@ public class CoeffOp extends RefOp{
     
     @Override
     public Operator getCopy() {
-        return new CoeffOp(this.coeff, this.child.getCopy(), this.op.getCopy());
+        return new CoeffOp((Coeff) this.coeff.getCopy(), this.child.getCopy(), this.op.getCopy());
     }
     
     @Override
@@ -42,9 +42,9 @@ public class CoeffOp extends RefOp{
     }  
     
     
-    public static Operator[] getCoeffOps(Operator coeffOp, Operator[] op){
+    public static CoeffOp[] getCoeffOps(Operator coeffOp, Operator[] op){
         
-        Operator[] ret = new CoeffOp[op.length];        
+        CoeffOp[] ret = new CoeffOp[op.length];        
         
         for (int i = 0; i < op.length; i++)            
             ret[i] = new CoeffOp(new Coeff(new Var("c_" + String.valueOf(i), 1.0)), coeffOp, op[i]);
@@ -53,9 +53,9 @@ public class CoeffOp extends RefOp{
         
     }
     
-    public static Operator[] getCoeffOps(Operator coeffOp[], Operator[] op){
+    public static CoeffOp[] getCoeffOps(Operator coeffOp[], Operator[] op){
         
-        Operator[] ret = new CoeffOp[coeffOp.length * op.length];        
+        CoeffOp[] ret = new CoeffOp[coeffOp.length * op.length];        
         
         for (int i = 0; i < coeffOp.length; i++) 
             for (int j = 0; j < op.length; j++) 

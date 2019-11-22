@@ -35,12 +35,14 @@ public class RefOp implements Operator{
     
     @Override
     public boolean term() {
-        return false;
+        if(this.child == null)
+            return false;        
+        return this.child.term();
     }
     
     @Override
     public void add(Operator child) {        
-        if(this.child == null || this.child.term())
+        if(this.child == null)
             this.child = child;
         else
             this.child.add(child);

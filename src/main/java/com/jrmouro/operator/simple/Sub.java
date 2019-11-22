@@ -12,11 +12,19 @@ package com.jrmouro.operator.simple;
 public class Sub extends SimpleOperator {
 
     public Sub() {
-        super("-", new ConstOp(0.0));
+        super("-");
     }
 
     public Sub(Operator... child) {
         super("-", child);
+    }
+    
+    public Sub(int limit) {
+        super(limit, "-", new ConstOp(1.0));
+    }    
+    
+    public Sub(int limit, Operator... child) {
+        super(limit, "-", child);
     }
 
     @Override

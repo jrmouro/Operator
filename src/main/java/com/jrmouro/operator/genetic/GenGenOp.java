@@ -8,12 +8,16 @@ package com.jrmouro.operator.genetic;
 import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.simple.RefOp;
 import com.jrmouro.operator.simple.ConstOp;
-import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
+import com.jrmouro.genetic.chromosome.ChromosomeDouble;
+import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeOne;
+import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
 import com.jrmouro.genetic.integer.IntegerChromosome;
 import com.jrmouro.genetic.integer.IntegerGeneticAlgorithm;
+import com.jrmouro.operator.coeff.Coeff;
+import com.jrmouro.operator.coeff.CoeffOp;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.generator.Generator;
 import java.io.IOException;
@@ -24,15 +28,18 @@ import org.apache.commons.math3.genetics.StoppingCondition;
  *
  * @author ronaldo
  */
-public class GenOp extends RefOp {
+public class GenGenOp extends RefOp {
 
-    Operator[] operators;
+    //Operator[] operators;
+    //Coeff[] coeffs;
     Var var;
+    int count = 1;
 
-    public GenOp(
+    public GenGenOp(
             Var var,
-            double[][] dados,
-            Operator[] ops,
+            double[][] data,
+            CoeffOp[] ops,
+            Coeff[] coeffs,
             Generator generator,
             int populationSize,
             int populationReuse,
@@ -46,22 +53,20 @@ public class GenOp extends RefOp {
             double crossoverRate,
             double mutationRate,
             double mutationRateGene,
-            int aritySelection
+            int aritySelection,
+            int nrGen,
+            int sniff,
+            double limit,
+            double sd
     ) throws IOException {
 
         super(new ConstOp(0.0));
 
-        if (dados.length > 0) {
+        if (data.length > 0) {
 
             this.var = var;
 
-            this.operators = new Operator[1 + ops.length];
-
-            this.operators[0] = new VarOp(var);
-
-            for (int i = 1; i < this.operators.length; i++) {
-                this.operators[i] = ops[i - 1];
-            }
+                        
 
             FitnessFunction<Integer> fitnessFunction = new FitnessFunction<Integer>() {
 
@@ -72,20 +77,34 @@ public class GenOp extends RefOp {
 
                     Operator[] opers = new Operator[ca.getRepresentation().size()];
 
-                    for (Integer integer : ca.getRepresentation()) {
-                        int a = integer % operators.length;
-                        if (operators[a].term()) {
-                            opers[i++] = operators[a];
-                        } else {
-                            opers[i++] = operators[a].getCopy();
-                        }
+                    for (Integer integer : ca.getRepresentation())    
+                        opers[i++] = ops[integer % ops.length].getCopy();
+                                        
+                    Operator op = generator.generate(opers);
+
+                    FitnessFunction<Double> fitnessFunction = new DataOpFitnessFunction(data, var, coeffs, op);
+
+                    double[] v = new double[coeffs.length];
+                    i = 0;
+                    for (Coeff coeff : coeffs) {
+                        //v[i++] = coeff.getVar().value;
+                        v[i++] = 1.0;
                     }
 
-                    Operator op = generator.generate(opers);
+                    ChromosomeDouble first = new ChromosomeOne(v, fitnessFunction, sd);
+
+                    ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
+
+                    /*for (int j = 0; j < coeffs.length; j++) {
+                        coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+                    }*/
+                    
+                    System.out.println("\tEA " + String.valueOf(count++) +": " + chromosome.toString());
+                    //System.out.println("\tEA " + String.valueOf(count++) +": " );
 
                     Double ret = 0.0;
 
-                    for (double[] dado : dados) {
+                    for (double[] dado : data) {
 
                         var.value = dado[0];
 
@@ -99,7 +118,8 @@ public class GenOp extends RefOp {
 
                     }
 
-                    return ret;
+                    return fitnessFunction.fitness(chromosome);
+                    //return ret;
                 }
 
             };
@@ -118,7 +138,7 @@ public class GenOp extends RefOp {
                     crossoverRate,
                     mutationRate,
                     mutationRateGene,
-                    aritySelection); 
+                    aritySelection);
 
             IntegerChromosome chro = ga.run();
 
@@ -126,7 +146,7 @@ public class GenOp extends RefOp {
 
             int i = 0;
             for (Integer integer : chro.getRepresentation()) {
-                opers[i++] = operators[integer % operators.length].getCopy();
+                opers[i++] = ops[integer % ops.length].getCopy();
             }
 
             this.child = generator.generate(opers);

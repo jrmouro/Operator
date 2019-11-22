@@ -12,7 +12,6 @@ import com.jrmouro.operator.plot.PlotOp;
 import com.jrmouro.operator.polynom.PolExpOp;
 import com.jrmouro.operator.simple.Var;
 import org.junit.Test;
-
 /**
  *
  * @author ronaldo

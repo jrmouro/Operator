@@ -12,11 +12,19 @@ package com.jrmouro.operator.simple;
 public class Mul extends SimpleOperator{
 
     public Mul() {
-        super("*", new ConstOp(1.0));
+        super("*");
     }
     
     public Mul(Operator... child) {
         super("*", child);
+    }
+    
+    public Mul(int limit) {
+        super(limit, "*", new ConstOp(1.0));
+    }    
+    
+    public Mul(int limit, Operator... child) {
+        super(limit, "*", child);
     }
         
     @Override

@@ -5,13 +5,15 @@
  */
 package com.jrmouro.test;
 
+import com.jrmouro.genetic.integer.ChromosomeIntegerTrueValidity;
 import com.jrmouro.genetic.integer.CompositeStoppingCondition;
 import com.jrmouro.genetic.integer.IntegerCrossover;
+import com.jrmouro.operator.coeff.Coeff;
+import com.jrmouro.operator.coeff.CoeffOp;
 import com.jrmouro.operator.simple.ConstOp;
 import com.jrmouro.operator.simple.Cos;
 import com.jrmouro.operator.simple.Div;
 import com.jrmouro.operator.simple.Exp;
-import com.jrmouro.operator.genetic.GenOpCoeffOp;
 import com.jrmouro.operator.simple.Ln;
 import com.jrmouro.operator.simple.Mul;
 import com.jrmouro.operator.simple.Operator;
@@ -24,6 +26,7 @@ import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.operator.generator.Generator;
 import com.jrmouro.operator.generator.TreeGenerator;
+import com.jrmouro.operator.genetic.GenGenOp;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -31,7 +34,7 @@ import org.junit.Test;
  *
  * @author ronaldo
  */
-public class GenOpJUnitTest {
+public class GenGenOpJUnitTest {
 
     @Test
     public void test() throws IOException {
@@ -116,35 +119,43 @@ public class GenOpJUnitTest {
             new ConstOp(2.0)           
         };
         
+         Operator[] cops = {
+            new Sum(),
+            new Mul(),
+            new Exp(),   
+            new Sub()
+        };
+        
+        
+        CoeffOp[] coeffOps =  (CoeffOp[]) CoeffOp.getCoeffOps(cops, ops);
+
+        Coeff[] coeffs = CoeffOp.getCoeffs((CoeffOp[]) coeffOps);
         
 
+        Generator generator = new TreeGenerator(2, 4);
+
         
-        
-
-        Generator generator = new TreeGenerator(2, 5);
-
-        double[] dom = {3.0, 13.0, 29.0};
-
-        Operator op = new GenOpCoeffOp(
+        Operator op = new GenGenOp(
                 var,
                 data,//data
-                ops,//operators
+                coeffOps,//operators
+                coeffs,
                 generator,
-                50,//pop size
+                20,//pop size
                 5,// por reuse
-                80,//pop limit
-                new RangeValidity(var, ops, generator, dom, 0.0, 50.0),
+                20,//pop limit
+                new ChromosomeIntegerTrueValidity(),
                 200,//chrom. size
                 0,//leftBoundChromosome,
                 Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                new CompositeStoppingCondition(300, -0.0001),
+                new CompositeStoppingCondition(100, -0.0001),
                 new IntegerCrossover(150),
                 0.5,//crossoverRate,
                 0.5,//mutationRate,
                 0.3,//mutationRateGene,
                 2,// aritySelection
-                300,
                 100,
+                50,
                 0.00001,
                 0.5
         );

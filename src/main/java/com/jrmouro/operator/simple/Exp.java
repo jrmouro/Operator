@@ -11,21 +11,25 @@ package com.jrmouro.operator.simple;
  */
 public class Exp extends SimpleOperator{
     
-    final int limit;
-    
-    public Exp(int limit){
-        super("**", new ConstOp(1.0));
-        this.limit = limit;
-    }
-
     public Exp(){
-        super("**", new ConstOp(1.0));
-        this.limit = 2;
+        super("**");
     }
     
     public Exp(Operator... child) {
         super("**", child);
-        this.limit = 2;
+    }
+    
+    public Exp(int limit) {
+        super(limit, "**", new ConstOp(1.0));
+    }    
+    
+    public Exp(int limit, Operator... child) {
+        super(limit, "**", child);
+    }
+    
+    @Override
+    public boolean validValues(double value1, double value2) {
+        return value1 >= 0.0;
     }
     
     @Override
@@ -35,13 +39,7 @@ public class Exp extends SimpleOperator{
 
     @Override
     public Operator getCopy() {
-        return new Exp(this.limit);
-    }
-    
-    @Override
-    final public boolean term() {
-        return this.children.size() > this.limit;
-    }
-    
+        return new Exp();
+    }   
     
 }

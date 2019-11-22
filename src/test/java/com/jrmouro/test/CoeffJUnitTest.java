@@ -5,7 +5,7 @@
  */
 package com.jrmouro.test;
 
-import com.jrmouro.genetic.integer.ChromosomeIntegerValidity;
+import com.jrmouro.genetic.integer.ChromosomeIntegerTrueValidity;
 import com.jrmouro.genetic.integer.CompositeStoppingCondition;
 import com.jrmouro.genetic.integer.IntegerCrossover;
 import com.jrmouro.operator.coeff.Coeff;
@@ -28,7 +28,6 @@ import com.jrmouro.operator.generator.Generator;
 import com.jrmouro.operator.generator.TreeGenerator;
 import com.jrmouro.operator.simple.VarOp;
 import java.io.IOException;
-import java.util.List;
 import org.junit.Test;
 
 /**
@@ -40,7 +39,7 @@ public class CoeffJUnitTest {
     @Test
     public void hello() throws IOException {
         
-        double[][] data = {
+        double[][] data0 = {
             {10, 6.36},
             {20, 9.9},
             {30, 9.22},
@@ -52,6 +51,23 @@ public class CoeffJUnitTest {
             {90, 14.39},
             {100, 13.31}
         };
+        
+        double[][] data3 = {           
+            {2.0, 3.0},
+            {3.0, 5.0},
+            {4.0, 7.0},
+            {5.0, 11.0},
+            {6.0, 13.0},
+            {7.0, 17.0},
+            {8.0, 19.0},
+            {9.0, 23.0},
+            {10.0, 29.0},
+            {11.0, 31.0},
+            {12.0, 37.0},
+            {13.0, 41.0},
+        };
+        
+        double[][] data = data3;
         
         Var var = new Var("x");
         
@@ -66,8 +82,7 @@ public class CoeffJUnitTest {
             new Ln(),
             new VarOp(var),
             new ConstOp(-1.0),
-            new ConstOp(0.1),
-            new ConstOp(2.0)           
+            new ConstOp(0.1)          
         };
         
         Operator[] cops = {
@@ -84,38 +99,7 @@ public class CoeffJUnitTest {
 
         Generator generator = new TreeGenerator(2, 6);
 
-        ChromosomeIntegerValidity validity = new ChromosomeIntegerValidity() {
-
-            @Override
-            public boolean isRepresentationValid(List<Integer> representation) {
-                
-                /*Operator[] opers = new Operator[representation.size()];
-
-                int i = 0;
-                for (Integer integer : representation) {
-                    int a = integer % operators.length;
-                    if(operators[a].term())
-                        opers[i++] = operators[a];
-                    else
-                        opers[i++] = operators[a].getCopy();
-                }
-
-                Operator op = generator.generate(opers);
-                
-                var.value = 0.0;                
-                double aval0 = op.aval();
-                var.value = 50.0;                
-                double aval1 = op.aval();
-                var.value = 100.0;                
-                double aval2 = op.aval();
-                
-                //return aval0 <= 20.0 && aval0 >= 0.0 && aval1 <= 20.0 && aval1 >= 0.0 && aval2 <= 20.0 && aval2 >= 0.0;*/
-                
-                return true;
-            }
-
-        };
-
+        
         Operator op = new GenOp(
                 var,
                 data,//data
@@ -123,18 +107,18 @@ public class CoeffJUnitTest {
                 //5,//height
                 //2,//largura
                 generator,
-                50,//pop size
+                100,//pop size
                 5,// por reuse
-                80,//pop limit
-                validity,
-                100,//chrom. size
+                100,//pop limit
+                new ChromosomeIntegerTrueValidity(),
+                64,//chrom. size
                 0,//leftBoundChromosome,
                 Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                new CompositeStoppingCondition(3000, -0.0001),
-                new IntegerCrossover(80),
+                new CompositeStoppingCondition(300, -0.00001),
+                new IntegerCrossover(32),
                 0.5,//crossoverRate,
-                0.5,//mutationRate,
-                0.3,//mutationRateGene,
+                0.2,//mutationRate,
+                0.7,//mutationRateGene,
                 2// aritySelection
         );
         
@@ -154,13 +138,13 @@ public class CoeffJUnitTest {
         new PlotOp(
                 data,
                 op,
-                "PolOp",
+                "Func",
                 "x",
                 "y",
                 0.0,
-                120.0,
+                15.0,
                 0.0,
-                20.0).plot();
+                50.0).plot();
 
         op = new GenCoeffOp(
                 data,
@@ -188,13 +172,13 @@ public class CoeffJUnitTest {
 
         new PlotOp(data,
                 op,
-                "PolOp",
+                "Func",
                 "x",
                 "y",
                 0.0,
-                120.0,
+                15.0,
                 0.0,
-                20.0).plot();
+                50.0).plot();
         
         
         op = new GenCoeffOp(
@@ -202,7 +186,7 @@ public class CoeffJUnitTest {
                 var,
                 coeffs,
                 op,
-                3000,
+                300,
                 50,
                 0.001,
                 0.5);
@@ -227,9 +211,9 @@ public class CoeffJUnitTest {
                 "x",
                 "y",
                 0.0,
-                120.0,
+                15.0,
                 0.0,
-                20.0).plot();
+                50.0).plot();
 
     }
         

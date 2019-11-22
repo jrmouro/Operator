@@ -30,33 +30,47 @@ public class TreeJUnitTest1 {
     @Test
     public void test() {
         
-        Var var = new Var("x");
+        Var var = new Var("x", 3);
         
         var.value = 1;
         
-        Operator [] ops = {    
+        Operator [] ops = {  
+            new Sin(),
+            new ConstOp(2.0),
+            new Sum(),
+            new Sin(),
+            new Mul(),
+            new VarOp(var),
+            new ConstOp(2.0),
+            new Sin(),
             new Mul(),
              new Sum(),
             new Ln(),            
             new ConstOp(2.0),
             new VarOp(var),
+            new Sin(),
             new Mul(),
             new Sub(),
             new Mul(),
+            new Sin(),
             new Exp(),
             new VarOp(var),
+            new Sin(),
             new Sum(),
             new ConstOp(2.0),
             new Sum(),
             new Sin(),
+            new VarOp(var),
             new Mul(),
             new Exp(),
             new Sin(),
             new ConstOp(1.0),
             new Sum(),
+            new VarOp(var),
             new Div(),
             new Ln(),
             new Log(),
+            new VarOp(var),
             new Sin(),
             new Exp(),
             new ConstOp(1.0),
@@ -70,7 +84,7 @@ public class TreeJUnitTest1 {
         };
         
     
-        Generator g = new BinaryTreeGenerator(5);
+        Generator g = new BinaryTreeGenerator(3);
         
         System.out.println(g.generate(ops));
         

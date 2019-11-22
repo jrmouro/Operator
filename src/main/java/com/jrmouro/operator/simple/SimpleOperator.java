@@ -11,36 +11,34 @@ package com.jrmouro.operator.simple;
  */
 public abstract class SimpleOperator extends OperatorList{
     
-    final protected String op;
+    int limit = Integer.MAX_VALUE - 1;
+    
+    public SimpleOperator(int limit, String op) {
+        super(op);
+        this.limit = limit;
+    }    
+
+    public SimpleOperator(int limit, String op, Operator... child) {
+        super(op, child);
+        this.limit = limit;
+    }
+    
+    public SimpleOperator(String op) {
+        super(op);
+    }    
 
     public SimpleOperator(String op, Operator... child) {
-        super(child);
-        this.op = op;
+        super(op, child);
     }
    
     @Override
     public boolean validValues(double value1, double value2) {
         return true;
     }
-    
+
     @Override
-    public String stringOperate(Operator... ops) {
-               
-        if(ops.length == 0)
-            return "";
-        
-        String ret = "(";
-        
-        int i = 0;
-        
-        for (; i < ops.length - 1; i++) {            
-            ret += ops[i].toString() + op;
-        }
-        
-        ret += ops[i].toString() + ")";
-        
-        return ret;
-        
+    public boolean term() {
+        return !(this.children.size() < this.limit);
     }
     
     

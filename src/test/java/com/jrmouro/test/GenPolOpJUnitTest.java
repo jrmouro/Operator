@@ -65,8 +65,8 @@ public class GenPolOpJUnitTest {
                 "y",
                 0.0,
                 120.0,
-                -120.0,
-                120.0);
+                0.0,
+                20.0);
         plot.plot();
         
         op = new GenPolExpOp(
@@ -89,8 +89,8 @@ public class GenPolOpJUnitTest {
                 "y",
                 0.0,
                 120.0,
-                -120.0,
-                120.0);
+                0.0,
+                20.0);
         plot.plot();
         
         
@@ -144,8 +144,8 @@ public class GenPolOpJUnitTest {
                 "y",
                 0.0,
                 120.0,
-                -120.0,
-                120.0);
+                0.0,
+                20.0);
         
         plot.plot();
 

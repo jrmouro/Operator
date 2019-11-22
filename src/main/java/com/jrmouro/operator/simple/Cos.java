@@ -5,8 +5,6 @@
  */
 package com.jrmouro.operator.simple;
 
-import com.jrmouro.operator.simple.SimpleFunctionOperator;
-
 /**
  *
  * @author ronaldo

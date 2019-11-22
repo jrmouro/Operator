@@ -11,7 +11,6 @@ import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.chromosome.ChromosomeDouble;
 import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeOne;
-import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeTwo;
 import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.operator.simple.Operator;

@@ -12,11 +12,19 @@ package com.jrmouro.operator.simple;
 public class Sum extends SimpleOperator{
 
     public Sum() {
-        super("+", new ConstOp(0.0));
+        super("+");
     }
     
     public Sum(Operator... child) {
         super("+", child);
+    }
+    
+    public Sum(int limit) {
+        super(limit, "+", new ConstOp(1.0));
+    }    
+    
+    public Sum(int limit, Operator... child) {
+        super(limit, "+", child);
     }
     
     @Override

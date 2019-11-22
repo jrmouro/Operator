@@ -14,17 +14,11 @@ import com.jrmouro.operator.simple.Operator;
 public class TreeGenerator implements Generator {
 
     final Integer height, nrChildren;
-    //Operator[] vector = null;
-
-    /*public TreeGenerator(Integer nrChildren, Integer height) {
-        this.height = height;
-        this.nrChildren = nrChildren;
-    }*/
+    
     
     public TreeGenerator(Integer nrChildren, Integer height) {
         this.height = height;
         this.nrChildren = nrChildren;
-        //this.vector = vector;
     }
 
     
