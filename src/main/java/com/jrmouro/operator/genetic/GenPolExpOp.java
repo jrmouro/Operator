@@ -9,6 +9,8 @@ import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.chromosome.ChromosomeDouble;
+import com.jrmouro.genetic.chromosome.ChromosomeValidity;
+import com.jrmouro.genetic.chromosome.ValidityRepresentation;
 import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeTwo;
 import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
@@ -60,6 +62,7 @@ public class GenPolExpOp  extends PolExpOp {
             Var var,
             Coeff[] coeffs,
             double[][] dados,
+            ValidityRepresentation<Double> validityRepresentation,
             int nrGen,
             int sniff, 
             double limit,
@@ -77,7 +80,7 @@ public class GenPolExpOp  extends PolExpOp {
             v[i++] = coeff.getVar().value;
         }
 
-        ChromosomeDouble first = new ChromosomeTwo(v, ff, sd);
+        ChromosomeDouble first = new ChromosomeTwo(v, ff, sd, validityRepresentation);
 
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
@@ -94,6 +97,7 @@ public class GenPolExpOp  extends PolExpOp {
             Var var,
             Integer degree,
             double[][] dados,
+            ValidityRepresentation<Double> validityRepresentation,
             int nrGen,
             int sniff, 
             double limit,
@@ -111,7 +115,7 @@ public class GenPolExpOp  extends PolExpOp {
             v[i++] = coeff.getVar().value;
         }
 
-        ChromosomeDouble first = new ChromosomeTwo(v, ff, sd);
+        ChromosomeDouble first = new ChromosomeTwo(v, ff, sd, validityRepresentation);
 
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 

@@ -47,7 +47,7 @@ public class CoeffOp extends RefOp{
         CoeffOp[] ret = new CoeffOp[op.length];        
         
         for (int i = 0; i < op.length; i++)            
-            ret[i] = new CoeffOp(new Coeff(new Var("c_" + String.valueOf(i), 1.0)), coeffOp, op[i]);
+            ret[i] = new CoeffOp(new Coeff(new Var("c_" + String.valueOf(i), 1.0)), coeffOp.getCopy(), op[i].getCopy());
         
         return ret;
         
@@ -59,7 +59,7 @@ public class CoeffOp extends RefOp{
         
         for (int i = 0; i < coeffOp.length; i++) 
             for (int j = 0; j < op.length; j++) 
-                ret[i * op.length + j] = new CoeffOp(new Coeff(new Var("c_" + String.valueOf(i) + "_" + String.valueOf(j), 1.0)), coeffOp[i], op[j]);
+                ret[i * op.length + j] = new CoeffOp(new Coeff(new Var("c_" + String.valueOf(i) + "_" + String.valueOf(j), 1.0)), coeffOp[i].getCopy(), op[j].getCopy());
         
         return ret;
         

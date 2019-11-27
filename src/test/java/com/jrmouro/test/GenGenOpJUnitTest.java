@@ -5,12 +5,10 @@
  */
 package com.jrmouro.test;
 
-import com.jrmouro.genetic.integer.ChromosomeIntegerTrueValidity;
 import com.jrmouro.genetic.integer.CompositeStoppingCondition;
 import com.jrmouro.genetic.integer.IntegerCrossover;
 import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.operator.coeff.CoeffOp;
-import com.jrmouro.operator.simple.ConstOp;
 import com.jrmouro.operator.simple.Cos;
 import com.jrmouro.operator.simple.Div;
 import com.jrmouro.operator.simple.Exp;
@@ -18,16 +16,17 @@ import com.jrmouro.operator.simple.Ln;
 import com.jrmouro.operator.simple.Mul;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.plot.PlotOp;
-import com.jrmouro.operator.genetic.RangeValidity;
 import com.jrmouro.operator.simple.Sin;
 import com.jrmouro.operator.simple.Sub;
 import com.jrmouro.operator.simple.Sum;
 import com.jrmouro.operator.simple.Var;
-import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.operator.generator.Generator;
 import com.jrmouro.operator.generator.TreeGenerator;
 import com.jrmouro.operator.genetic.GenGenOp;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 /**
@@ -103,6 +102,9 @@ public class GenGenOpJUnitTest {
         };
         
         Var var = new Var("x");
+        
+                
+        double[] dom = {10.0, 50.0, 100.0};
 
         Operator[] ops = {
             new Sum(),
@@ -113,51 +115,55 @@ public class GenGenOpJUnitTest {
             new Sin(),
             new Cos(),
             new Ln(),
-            new VarOp(var),
-            new ConstOp(-1.0),
-            new ConstOp(0.1),
-            new ConstOp(2.0)           
+           
         };
         
          Operator[] cops = {
             new Sum(),
-            new Mul(),
-            new Exp(),   
-            new Sub()
+            new Mul(),  
         };
         
         
-        CoeffOp[] coeffOps =  (CoeffOp[]) CoeffOp.getCoeffOps(cops, ops);
-
+        CoeffOp[] coeffOps =  CoeffOp.getCoeffOps(cops, ops);
+        
         Coeff[] coeffs = CoeffOp.getCoeffs((CoeffOp[]) coeffOps);
         
+        List<Operator> list = new ArrayList();
+        list.addAll(Arrays.asList(ops));
+        list.addAll(Arrays.asList(coeffOps));
+        
+        ops = new Operator[list.size()];
+        ops = list.toArray(ops);
+        
 
-        Generator generator = new TreeGenerator(2, 4);
+        Generator generator = new TreeGenerator(2, 5);
 
         
         Operator op = new GenGenOp(
                 var,
                 data,//data
-                coeffOps,//operators
+                ops,//operators
                 coeffs,
                 generator,
                 20,//pop size
-                5,// por reuse
+                1,// por reuse
                 20,//pop limit
-                new ChromosomeIntegerTrueValidity(),
-                200,//chrom. size
+                128,//chrom. size
                 0,//leftBoundChromosome,
                 Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                new CompositeStoppingCondition(100, -0.0001),
-                new IntegerCrossover(150),
-                0.5,//crossoverRate,
+                new CompositeStoppingCondition(50, -0.0001),
+                new IntegerCrossover(10),
+                0.8,//crossoverRate,
                 0.5,//mutationRate,
-                0.3,//mutationRateGene,
+                0.7,//mutationRateGene,
                 2,// aritySelection
-                100,
                 50,
+                20,
                 0.00001,
-                0.5
+                0.5,
+                dom, 
+                0.0, 
+                50.0
         );
 
         System.out.println();

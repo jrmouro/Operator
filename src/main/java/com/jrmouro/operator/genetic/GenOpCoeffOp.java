@@ -5,11 +5,10 @@
  */
 package com.jrmouro.operator.genetic;
 
-import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
 import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.coeff.Coeff;
-import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.generator.Generator;
+import com.jrmouro.operator.simple.Operator;
 import java.io.IOException;
 import org.apache.commons.math3.genetics.CrossoverPolicy;
 import org.apache.commons.math3.genetics.StoppingCondition;
@@ -18,17 +17,17 @@ import org.apache.commons.math3.genetics.StoppingCondition;
  *
  * @author ronaldo
  */
-public class GenOpCoeffOp extends GenCoeffOp{
-    
+public class GenOpCoeffOp extends GenCoeffOp {
+
     public GenOpCoeffOp(
+            double[][] data,
             Var var,
-            double[][] data,                
+            Coeff[] coeffs,
             Operator[] ops,
             Generator generator,
             int populationSize,
             int populationReuse,
             int populationLimit,
-            ChromosomeAbstractValidity<Integer> validity,
             int sizeChromosome,
             int leftBoundChromosome,
             int rightBoundChromosome,
@@ -38,88 +37,45 @@ public class GenOpCoeffOp extends GenCoeffOp{
             double mutationRate,
             double mutationRateGene,
             int aritySelection,
-            int nrGen, 
-            int sniff, 
-            double limit, 
-            double sd) throws IOException {
-        
-        super(  data, 
-                var, 
-                get(ops), 
-                get(
-                    var,
-                    data,                
-                    ops,
-                    generator,
-                    populationSize,
-                    populationReuse,
-                    populationLimit,
-                    validity,
-                    sizeChromosome,
-                    leftBoundChromosome,
-                    rightBoundChromosome,
-                    stoppingCondition,
-                    crossoverPolicy,
-                    crossoverRate,
-                    mutationRate,
-                    mutationRateGene,
-                    aritySelection), 
-                nrGen, 
-                sniff, 
-                limit, 
-                sd);
-        
-    }
-    
-    private static Coeff[] get(Operator[] ops){
-        Coeff[] ret = new Coeff[ops.length];
-        for (int i = 0; i < ops.length; i++) {
-            ret[i] = new Coeff(new Var("c_" + String.valueOf(i), 1.0));
-            ops[i].add(ret[i]);
-        }
-        return ret;
-    }
-    
-    private static Operator get(
-            Var var,   
-            double[][] data,
-            Operator[] ops,
-            Generator generator,
-            int populationSize,
-            int populationReuse,
-            int populationLimit,
-            ChromosomeAbstractValidity<Integer> validity,
-            int sizeChromosome,
-            int leftBoundChromosome,
-            int rightBoundChromosome,
-            StoppingCondition stoppingCondition,
-            CrossoverPolicy crossoverPolicy,
-            double crossoverRate,
-            double mutationRate,
-            double mutationRateGene,
-            int aritySelection
-    ) throws IOException{
-        
-        return new GenOp(
+            int nrGen,
+            int sniff,
+            double limit,
+            double sd,
+            double[] dom, 
+            double down, 
+            double up) throws IOException {
+
+        super(data,
                 var,
-                data,//data
-                ops,//operators
-                generator,
-                populationSize,//pop size
-                populationReuse,// por reuse
-                populationLimit,//pop limit
-                validity,
-                sizeChromosome,//chrom. size
-                leftBoundChromosome,//leftBoundChromosome,
-                rightBoundChromosome,//rightBoundChromosome,
-                stoppingCondition,
-                crossoverPolicy,
-                crossoverRate,//crossoverRate,
-                mutationRate,//mutationRate,
-                mutationRateGene,//mutationRateGene,
-                aritySelection// aritySelection
-        );
-        
-    }
-    
+                coeffs,
+                new GenOp(
+                        var,
+                        data,//data
+                        ops,//operators
+                        generator,
+                        populationSize,//pop size
+                        populationReuse,// por reuse
+                        populationLimit,//pop limit
+                        new GenOpRangeValidity(var, ops, generator, dom, down, up),
+                        sizeChromosome,//chrom. size
+                        leftBoundChromosome,//leftBoundChromosome,
+                        rightBoundChromosome,//rightBoundChromosome,
+                        stoppingCondition,
+                        crossoverPolicy,
+                        crossoverRate,//crossoverRate,
+                        mutationRate,//mutationRate,
+                        mutationRateGene,//mutationRateGene,
+                        aritySelection// aritySelection
+                ),
+                
+                nrGen,
+                sniff,
+                limit,
+                sd,
+                dom,
+                down,
+                up);
+
+    }  
+
 }

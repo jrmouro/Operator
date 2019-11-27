@@ -5,65 +5,59 @@
  */
 package com.jrmouro.operator.genetic;
 
-import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
+import com.jrmouro.genetic.chromosome.ValidityRepresentation;
+import com.jrmouro.operator.coeff.Coeff;
+import com.jrmouro.operator.generator.Generator;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.simple.Var;
-import com.jrmouro.operator.generator.Generator;
 import java.util.List;
 
 /**
  *
  * @author ronaldo
  */
-public class RangeValidity extends ChromosomeAbstractValidity<Integer> {
+public class GenCoeffOpRangeValidity implements ValidityRepresentation<Double> {
 
     final Var var;
-    final Operator[] operators;
-    final Generator generator;
+    final Operator operator;
     final double[] dom;
     final double down, up;
+    final Coeff[] coeffs;
 
-    public RangeValidity(
+    public GenCoeffOpRangeValidity(
             Var var, 
-            Operator[] operators, 
-            Generator generator, 
+            Operator operator, 
+            Coeff[] coeffs,
             double[] dom, 
             double down, 
             double up) {
         this.var = var;
-        this.operators = operators;
-        this.generator = generator;
+        this.operator = operator;
         this.dom = dom;
         this.down = down;
         this.up = up;
+        this.coeffs = coeffs;
     }
+   
 
-    
-
-    public boolean isRepresentationValid(List<Integer> representation) {
+    @Override
+    public boolean isValid(List<Double> representation) {
         Operator[] opers = new Operator[representation.size()];
 
         int i = 0;
-        for (Integer integer : representation) {
-            int a = integer % operators.length;
-            if (operators[a].term()) {
-                opers[i++] = operators[a];
-            } else {
-                opers[i++] = operators[a].getCopy();
-            }
+        for (Double d : representation) {
+            this.coeffs[i++].getVar().value = d;
         }
-
-        Operator op = generator.generate(opers);
+        
 
         for (double d : dom) {
             var.value = d;
-            double v = op.aval();
+            double v = operator.aval();
             if(v > up || v < down )
                 return false;
         }
         
         return true;
-
     }
 
 }

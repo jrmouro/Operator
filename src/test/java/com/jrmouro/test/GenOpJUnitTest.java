@@ -11,12 +11,10 @@ import com.jrmouro.operator.simple.ConstOp;
 import com.jrmouro.operator.simple.Cos;
 import com.jrmouro.operator.simple.Div;
 import com.jrmouro.operator.simple.Exp;
-import com.jrmouro.operator.genetic.GenOpCoeffOp;
 import com.jrmouro.operator.simple.Ln;
 import com.jrmouro.operator.simple.Mul;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.plot.PlotOp;
-import com.jrmouro.operator.genetic.RangeValidity;
 import com.jrmouro.operator.simple.Sin;
 import com.jrmouro.operator.simple.Sub;
 import com.jrmouro.operator.simple.Sum;
@@ -24,6 +22,8 @@ import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.operator.generator.Generator;
 import com.jrmouro.operator.generator.TreeGenerator;
+import com.jrmouro.operator.genetic.GenOp;
+import com.jrmouro.operator.genetic.GenOpRangeValidity;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -48,9 +48,7 @@ public class GenOpJUnitTest {
             {90, 14.39},
             {100, 13.31}
         };
-        
-        
-        
+
         double[][] data3 = {
             {1.0, 2.0},
             {2.0, 3.0},
@@ -64,9 +62,8 @@ public class GenOpJUnitTest {
             {10.0, 29.0},
             {11.0, 31.0},
             {12.0, 37.0},
-            {13.0, 41.0},
-        };
-        
+            {13.0, 41.0},};
+
         double[][] data4 = {
             {1.0, 2.0},
             {2.0, 3.0},
@@ -80,9 +77,8 @@ public class GenOpJUnitTest {
             {23.0, 29.0},
             {29.0, 31.0},
             {31.0, 37.0},
-            {37.0, 41.0},
-        };
-        
+            {37.0, 41.0},};
+
         double[][] data5 = {
             {1.0, 1.0},
             {2.0, 2.0},
@@ -96,9 +92,8 @@ public class GenOpJUnitTest {
             {10.0, 2.0},
             {11.0, 6.0},
             {12.0, 4.0},
-            {13.0, 6.0},
-        };
-        
+            {13.0, 6.0},};
+
         Var var = new Var("x");
 
         Operator[] ops = {
@@ -113,43 +108,91 @@ public class GenOpJUnitTest {
             new VarOp(var),
             new ConstOp(-1.0),
             new ConstOp(0.1),
-            new ConstOp(2.0)           
+            new ConstOp(2.0)
+
         };
         
-        
-
-        
-        
+        double[] dom = {10.0, 50.0, 100.0};
 
         Generator generator = new TreeGenerator(2, 5);
+        
+        Operator[] opsGen = new Operator[10];
 
-        double[] dom = {3.0, 13.0, 29.0};
+        for (int i = 0; i < 10; i++) {
 
-        Operator op = new GenOpCoeffOp(
-                var,
-                data,//data
-                ops,//operators
-                generator,
-                50,//pop size
-                5,// por reuse
-                80,//pop limit
-                new RangeValidity(var, ops, generator, dom, 0.0, 50.0),
-                200,//chrom. size
-                0,//leftBoundChromosome,
-                Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                new CompositeStoppingCondition(300, -0.0001),
-                new IntegerCrossover(150),
-                0.5,//crossoverRate,
-                0.5,//mutationRate,
-                0.3,//mutationRateGene,
-                2,// aritySelection
-                300,
-                100,
-                0.00001,
-                0.5
-        );
+            opsGen[i] = new GenOp(
+                    var,
+                    data,//data
+                    //coeffs,
+                    ops,//operators
+                    generator,
+                    20,//pop size
+                    1,// por reuse
+                    20,//pop limit
+                    new GenOpRangeValidity(var, ops, generator, dom, 0, 20.0),
+                    200,//chrom. size
+                    0,//leftBoundChromosome,
+                    Integer.MAX_VALUE - 1,//rightBoundChromosome,
+                    new CompositeStoppingCondition(1000, -0.0001),
+                    new IntegerCrossover(150),
+                    0.8,//crossoverRate,
+                    0.5,//mutationRate,
+                    0.7,//mutationRateGene,
+                    2
+            );
 
-        System.out.println();
+
+            System.out.println(opsGen[i]);
+
+            new PlotOp(
+                    data,
+                    opsGen[i],
+                    "Function",
+                    "x",
+                    "y",
+                    0.0,
+                    110.0,
+                    0.0,
+                    20.0).plot();
+
+        }
+        
+        
+        
+        Operator op = new GenOp(
+                    var,
+                    data,//data
+                    opsGen,//operators
+                    generator,
+                    20,//pop size
+                    1,// por reuse
+                    20,//pop limit
+                    new GenOpRangeValidity(var, opsGen, generator, dom, 0, 20.0),
+                    200,//chrom. size
+                    0,//leftBoundChromosome,
+                    Integer.MAX_VALUE - 1,//rightBoundChromosome,
+                    new CompositeStoppingCondition(1000, -0.0001),
+                    new IntegerCrossover(150),
+                    0.8,//crossoverRate,
+                    0.5,//mutationRate,
+                    0.7,//mutationRateGene,
+                    2
+            );
+        
+        System.out.println(op);
+
+            new PlotOp(
+                    data,
+                    op,
+                    "Function",
+                    "x",
+                    "y",
+                    0.0,
+                    110.0,
+                    0.0,
+                    20.0).plot();
+            
+            System.out.println();
         for (double[] ds : data) {
             System.out.print(ds[0]);
             System.out.print(" : ");
@@ -160,19 +203,6 @@ public class GenOpJUnitTest {
         }
         
         System.out.println();
-
-        System.out.println(op);
-
-        new PlotOp(
-                data,
-                op,
-                "Function",
-                "x",
-                "y",
-                0.0,
-                110.0,
-                0.0,
-                20.0).plot();
 
     }
 }

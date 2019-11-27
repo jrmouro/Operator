@@ -7,6 +7,7 @@ package com.jrmouro.test;
 
 import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.operator.genetic.GenCoeffOp;
+import com.jrmouro.operator.genetic.GenCoeffOpRangeValidity;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.plot.PlotOp;
 import com.jrmouro.operator.polynom.PolExpOp;
@@ -54,7 +55,8 @@ public class GenCoeffOpJUnitTest {
         
         System.out.println(op);
         
-
+        double[] dom = {10.0, 50.0, 100.0};
+        
         new PlotOp(
                 data,
                 op,
@@ -67,14 +69,17 @@ public class GenCoeffOpJUnitTest {
                 120.0).plot();
         
         op = new GenCoeffOp(
-                        data,
-                        var,
-                        coeffs,
-                        op,
-                        3000,
-                        50,
-                        0.0001,
-                        0.5);
+                data,
+                var,
+                coeffs,
+                op,
+                3000,
+                50,
+                0.0001,
+                0.5, 
+                dom, 
+                0, 
+                20.0);
         
         System.out.println(op);
         

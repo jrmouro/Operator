@@ -67,8 +67,8 @@ public abstract class SimpleFunctionOperator implements Operator {
 
     @Override
     public boolean term() {
-        //return (this.child != null);
-        return false;
+        return (this.child != null);
+        //return false;
     }
 
     @Override

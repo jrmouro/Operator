@@ -25,11 +25,14 @@ public class GenCoeffOp extends RefOp{
             double[][] data, 
             Var var, 
             Coeff[] coeffs, 
-            Operator child,
+            Operator child,            
             int nrGen,
             int sniff, 
             double limit,
-            double sd) 
+            double sd,
+            double[] dom, 
+            double down, 
+            double up) 
     {
         
         super(child); 
@@ -42,7 +45,9 @@ public class GenCoeffOp extends RefOp{
             v[i++] = coeff.getVar().value;
         }
         
-        ChromosomeDouble first = new ChromosomeOne(v, fitnessFunction, sd);
+        GenCoeffOpRangeValidity validity2 = new GenCoeffOpRangeValidity(var, child, coeffs, dom, down, up);
+        
+        ChromosomeDouble first = new ChromosomeOne(v, fitnessFunction, sd, validity2);
 
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
@@ -50,6 +55,8 @@ public class GenCoeffOp extends RefOp{
 
         for (int j = 0; j < coeffs.length; j++)
             coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+        
+        //System.out.println(this.child);
         
         
     }

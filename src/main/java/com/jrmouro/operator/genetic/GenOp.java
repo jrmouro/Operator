@@ -11,7 +11,6 @@ import com.jrmouro.operator.simple.ConstOp;
 import com.jrmouro.operator.simple.VarOp;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
-import com.jrmouro.genetic.integer.ChromosomeAbstractValidity;
 import com.jrmouro.genetic.integer.IntegerChromosome;
 import com.jrmouro.genetic.integer.IntegerGeneticAlgorithm;
 import com.jrmouro.operator.simple.Operator;
@@ -37,7 +36,7 @@ public class GenOp extends RefOp {
             int populationSize,
             int populationReuse,
             int populationLimit,
-            ChromosomeAbstractValidity<Integer> validity,
+            GenOpRangeValidity validity,
             int sizeChromosome,
             int leftBoundChromosome,
             int rightBoundChromosome,
@@ -120,7 +119,7 @@ public class GenOp extends RefOp {
                     mutationRateGene,
                     aritySelection); 
 
-            IntegerChromosome chro = ga.run();
+            IntegerChromosome chro = (IntegerChromosome) ga.run().getFittestChromosome();
 
             Operator[] opers = new Operator[chro.getRepresentation().size()];
 
@@ -135,6 +134,11 @@ public class GenOp extends RefOp {
 
         }
 
+    }
+    
+    @Override
+    public boolean term() {               
+        return true;
     }
 
 }
