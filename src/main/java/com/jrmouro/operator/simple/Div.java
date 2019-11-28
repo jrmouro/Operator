@@ -26,12 +26,7 @@ public class Div  extends SimpleOperator{
     public Div(int limit, Operator... child) {
         super(limit, "/", child);
     }
-    
-    @Override
-    public boolean validValues(double value1, double value2) {
-        return value2 != 0.0;
-    } 
-    
+        
     @Override
     public double operate(double value1, double value2) {
         return value1 / value2;

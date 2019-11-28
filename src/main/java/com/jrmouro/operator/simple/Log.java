@@ -22,11 +22,6 @@ public class Log  extends SimpleFunctionOperator{
     }
     
     @Override
-    public boolean validValue(double value) {
-        return value > 0.0;
-    }
-
-    @Override
     public double operate(double value) {
         return Math.log(value) / Math.log(10.0);
     }

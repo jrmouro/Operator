@@ -31,11 +31,7 @@ public abstract class SimpleOperator extends OperatorList{
         super(op, child);
     }
    
-    @Override
-    public boolean validValues(double value1, double value2) {
-        return true;
-    }
-
+    
     @Override
     public boolean term() {
         return !(this.children.size() < this.limit);

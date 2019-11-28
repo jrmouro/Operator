@@ -38,35 +38,16 @@ public abstract class OperatorList implements Operator, Iterable<Operator> {
 
         double ret = 0.0;
 
-        int i = 0;
-        
-        for (; i < this.children.size(); i++) {
+        if (this.children.size() > 0) {
 
-            ret = this.children.get(i).aval();
+            ret = this.children.get(0).aval();
 
-            if (Double.isFinite(ret)){
-                i++;
-                break;
-            }
-            
-        }
-
-        
-        for (; i < this.children.size(); i++) {
-
-            double aux = this.children.get(i).aval();
-
-            if (Double.isFinite(aux)){
-                
-                if(this.validValues(ret, aux))
-                    ret = this.operate(ret, aux);
-                else
-                    ret = aux;
-                
+            for (int i = 1; i < this.children.size(); i++) {
+                ret = this.operate(ret, this.children.get(i).aval());
             }
 
         }
-        
+
         return ret;
 
     }
@@ -78,9 +59,8 @@ public abstract class OperatorList implements Operator, Iterable<Operator> {
 
     @Override
     public void add(Operator child) {
-        if (!this.term()) {
+        if (!this.term())
             this.children.add(0, child);
-        }
     }
 
     @Override
@@ -90,72 +70,27 @@ public abstract class OperatorList implements Operator, Iterable<Operator> {
 
     @Override
     final public String toString() {
-
-        List<Operator> list = getValidList();
         
-        if (list.isEmpty()) {
-            return "0.0";
-        }
+        String ret = "0.0";
 
-        String ret = "(";
+        if (!this.children.isEmpty()) {            
+            
+            ret = "(";
+            
+            int i = 0;
 
-        int i = 0;
+            for (; i < this.children.size() - 1; i++) 
+                ret += this.children.get(i).toString() + this.opStr;
+            
 
-        for (; i < list.size() - 1; i++) {
-            ret += list.get(i).toString() + this.opStr;
-        }
-
-        ret += list.get(i).toString() + ")";
-
-        return ret;
-
-    }
-    
-    private List<Operator> getValidList(){
-        
-        List<Operator> retList = new ArrayList();
-        
-        int i = 0;
-        
-        double ret = 0.0;
-        
-        for (; i < this.children.size(); i++) {
-
-            ret = this.children.get(i).aval();
-
-            if (Double.isFinite(ret)){
-                retList.add(this.children.get(i));
-                i++;
-                break;
-            }
+            ret += this.children.get(i).toString() + ")";
             
         }
 
         
-        for (; i < this.children.size(); i++) {
+        return ret;
 
-            double aux = this.children.get(i).aval();
-
-            if (Double.isFinite(aux)){
-                
-                if(this.validValues(ret, aux)){
-                    ret = this.operate(ret, aux);
-                }else{
-                    ret = aux;
-                    retList.clear();
-                }
-                
-                retList.add(this.children.get(i));
-                
-            }
-
-        }
-        
-        
-        return retList;
     }
-
-    public abstract boolean validValues(double value1, double value2);
 
     public abstract double operate(double value1, double value2);
 

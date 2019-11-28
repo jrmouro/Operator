@@ -59,7 +59,7 @@ public class GenOpRangeValidity implements ValidityRepresentation<Integer> {
         for (double d : dom) {
             var.value = d;
             double v = op.aval();
-            if(v > up || v < down )
+            if(v > up || v < down  || !Double.isFinite(v))
                 return false;
         }
         

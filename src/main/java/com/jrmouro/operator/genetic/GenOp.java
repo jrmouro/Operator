@@ -92,7 +92,7 @@ public class GenOp extends RefOp {
 
                         ret -= ((a - dado[1]) * (a - dado[1]));
 
-                        if (Double.isNaN(ret)) {
+                        if (Double.isNaN(ret) || Double.isInfinite(ret)) {
                             return -Double.MAX_VALUE;
                         }
 

@@ -25,23 +25,14 @@ public abstract class SimpleFunctionOperator implements Operator {
 
     public abstract double operate(double value);
 
-    public boolean validValue(double value) {
-        return true;
-    }
-
     @Override
     public double aval() {
 
         double ret = 0.0;
 
-        if (this.child != null) {
-
-            double v = this.child.aval();
-
-            if (Double.isFinite(v) && this.validValue(child.aval())) {
-                ret = this.operate(v);
-            }
-        }
+        if (this.child != null)
+            ret = this.operate(this.child.aval());
+        
 
         return ret;
     }
@@ -51,16 +42,9 @@ public abstract class SimpleFunctionOperator implements Operator {
 
         String ret = "0.0";
 
-        if (this.child != null) {
-
-            double v = this.child.aval();
-
-            if (Double.isFinite(v) && this.validValue(child.aval())) {
-                ret = op + "(" + this.child.toString() + ")";
-            }
-
-        }
-
+        if (this.child != null)
+            ret = op + "(" + this.child.toString() + ")";
+            
         return ret;
 
     }
@@ -68,12 +52,12 @@ public abstract class SimpleFunctionOperator implements Operator {
     @Override
     public boolean term() {
         return (this.child != null);
-        //return false;
     }
 
     @Override
     public void add(Operator child) {
-        this.child = child;        
+        if(!this.term())
+            this.child = child;
     }
 
 }

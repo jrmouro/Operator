@@ -53,7 +53,7 @@ public class GenCoeffOpRangeValidity implements ValidityRepresentation<Double> {
         for (double d : dom) {
             var.value = d;
             double v = operator.aval();
-            if(v > up || v < down )
+            if(v > up || v < down || !Double.isFinite(v) )
                 return false;
         }
         

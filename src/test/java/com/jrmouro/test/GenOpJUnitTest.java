@@ -112,9 +112,9 @@ public class GenOpJUnitTest {
 
         };
         
-        double[] dom = {10.0, 50.0, 100.0};
+        double[] dom = {10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0};
 
-        Generator generator = new TreeGenerator(2, 5);
+        Generator generator = new TreeGenerator(2, 8);
         
         Operator[] opsGen = new Operator[10];
 
@@ -133,8 +133,8 @@ public class GenOpJUnitTest {
                     200,//chrom. size
                     0,//leftBoundChromosome,
                     Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                    new CompositeStoppingCondition(1000, -0.0001),
-                    new IntegerCrossover(150),
+                    new CompositeStoppingCondition(3000, -0.0001),
+                    new IntegerCrossover(50),
                     0.8,//crossoverRate,
                     0.5,//mutationRate,
                     0.7,//mutationRateGene,
@@ -158,51 +158,6 @@ public class GenOpJUnitTest {
         }
         
         
-        
-        Operator op = new GenOp(
-                    var,
-                    data,//data
-                    opsGen,//operators
-                    generator,
-                    20,//pop size
-                    1,// por reuse
-                    20,//pop limit
-                    new GenOpRangeValidity(var, opsGen, generator, dom, 0, 20.0),
-                    200,//chrom. size
-                    0,//leftBoundChromosome,
-                    Integer.MAX_VALUE - 1,//rightBoundChromosome,
-                    new CompositeStoppingCondition(1000, -0.0001),
-                    new IntegerCrossover(150),
-                    0.8,//crossoverRate,
-                    0.5,//mutationRate,
-                    0.7,//mutationRateGene,
-                    2
-            );
-        
-        System.out.println(op);
-
-            new PlotOp(
-                    data,
-                    op,
-                    "Function",
-                    "x",
-                    "y",
-                    0.0,
-                    110.0,
-                    0.0,
-                    20.0).plot();
-            
-            System.out.println();
-        for (double[] ds : data) {
-            System.out.print(ds[0]);
-            System.out.print(" : ");
-            System.out.print(ds[1]);
-            System.out.print(" : ");
-            var.value = ds[0];
-            System.out.println(op.aval());
-        }
-        
-        System.out.println();
 
     }
 }

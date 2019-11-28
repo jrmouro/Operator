@@ -46,7 +46,7 @@ public class DataOpFitnessFunction implements FitnessFunction<Double> {
 
             ret -= ((a - d[1]) * (a - d[1]));
 
-            if (Double.isNaN(ret)) {
+            if (Double.isNaN(ret)||Double.isInfinite(ret)) {
                 return -Double.MAX_VALUE;
             }
         }

@@ -20,11 +20,6 @@ public class Ln extends SimpleFunctionOperator{
     public Ln(Operator child) {
         super("log", child);
     }
-
-    @Override
-    public boolean validValue(double value) {
-        return value > 0.0;
-    }
     
     @Override
     public double operate(double value) {

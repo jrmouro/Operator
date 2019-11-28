@@ -53,7 +53,7 @@ public class GenOpCoeffOpJUnitTest {
             {100, 13.31}
         };
 
-       double[] dom = {10.0, 50.0, 100.0};
+       double[] dom = {10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0};
 
         Var var = new Var("x");
 
