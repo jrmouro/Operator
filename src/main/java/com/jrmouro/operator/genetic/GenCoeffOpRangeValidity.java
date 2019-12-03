@@ -5,18 +5,18 @@
  */
 package com.jrmouro.operator.genetic;
 
-import com.jrmouro.genetic.chromosome.ValidityRepresentation;
 import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.operator.generator.Generator;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.simple.Var;
 import java.util.List;
+import com.jrmouro.genetic.chromosome.ValidityGenotype;
 
 /**
  *
  * @author ronaldo
  */
-public class GenCoeffOpRangeValidity implements ValidityRepresentation<Double> {
+public class GenCoeffOpRangeValidity implements ValidityGenotype<Double> {
 
     final Var var;
     final Operator operator;
@@ -41,7 +41,8 @@ public class GenCoeffOpRangeValidity implements ValidityRepresentation<Double> {
    
 
     @Override
-    public boolean isValid(List<Double> representation) {
+    public boolean isGenotypeValid(List<Double> representation) {
+        
         Operator[] opers = new Operator[representation.size()];
 
         int i = 0;

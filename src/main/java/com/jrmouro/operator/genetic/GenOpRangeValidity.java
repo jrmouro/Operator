@@ -5,17 +5,17 @@
  */
 package com.jrmouro.operator.genetic;
 
-import com.jrmouro.genetic.chromosome.ValidityRepresentation;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.generator.Generator;
 import java.util.List;
+import com.jrmouro.genetic.chromosome.ValidityGenotype;
 
 /**
  *
  * @author ronaldo
  */
-public class GenOpRangeValidity implements ValidityRepresentation<Integer> {
+public class GenOpRangeValidity implements ValidityGenotype<Integer> {
 
     final Var var;
     final Operator[] operators;
@@ -40,7 +40,7 @@ public class GenOpRangeValidity implements ValidityRepresentation<Integer> {
    
 
     @Override
-    public boolean isValid(List<Integer> representation) {
+    public boolean isGenotypeValid(List<Integer> representation) {
         
         Operator[] opers = new Operator[representation.size()];
 

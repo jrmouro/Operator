@@ -10,11 +10,12 @@ import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.chromosome.ChromosomeDouble;
 import com.jrmouro.genetic.chromosome.ChromosomeValidity;
-import com.jrmouro.genetic.chromosome.ValidityRepresentation;
 import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeTwo;
 import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.operator.polynom.PolExpOp;
+import java.util.List;
+import com.jrmouro.genetic.chromosome.ValidityGenotype;
 
 /**
  *
@@ -34,9 +35,11 @@ public class GenPolExpOp  extends PolExpOp {
 
         @Override
         public double fitness(ChromosomeAbstract<Double> chromosome) {
+            
+            List<Double> repr = chromosome.getGenotype();
 
             for (int j = 0; j < this.operator.getCoeffs().length; j++) {
-                this.operator.getCoeffs()[j].getVar().value = chromosome.getRepresentation().get(j);
+                this.operator.getCoeffs()[j].getVar().value = repr.get(j);
             }
             
             Double ret = 0.0;
@@ -62,7 +65,7 @@ public class GenPolExpOp  extends PolExpOp {
             Var var,
             Coeff[] coeffs,
             double[][] dados,
-            ValidityRepresentation<Double> validityRepresentation,
+            ValidityGenotype<Double> validityRepresentation,
             int nrGen,
             int sniff, 
             double limit,
@@ -85,9 +88,11 @@ public class GenPolExpOp  extends PolExpOp {
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
     }
@@ -97,7 +102,7 @@ public class GenPolExpOp  extends PolExpOp {
             Var var,
             Integer degree,
             double[][] dados,
-            ValidityRepresentation<Double> validityRepresentation,
+            ValidityGenotype<Double> validityRepresentation,
             int nrGen,
             int sniff, 
             double limit,
@@ -121,8 +126,10 @@ public class GenPolExpOp  extends PolExpOp {
 
         System.out.println(chromosome);
 
+        List<Double> repr = chromosome.getGenotype();
+        
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
     }

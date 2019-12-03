@@ -14,6 +14,7 @@ import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeOne;
 import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.operator.simple.Operator;
+import java.util.List;
 
 /**
  *
@@ -52,9 +53,11 @@ public class GenCoeffOp extends RefOp{
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < coeffs.length; j++)
-            coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            coeffs[j].getVar().value = repr.get(j);
         
         //System.out.println(this.child);
         

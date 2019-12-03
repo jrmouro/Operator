@@ -10,6 +10,7 @@ import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.operator.simple.Operator;
+import java.util.List;
 
 /**
  *
@@ -31,9 +32,11 @@ public class DataOpFitnessFunction implements FitnessFunction<Double> {
         
     @Override
     public double fitness(ChromosomeAbstract<Double> chromosome) {
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
         Double ret = 0.0;

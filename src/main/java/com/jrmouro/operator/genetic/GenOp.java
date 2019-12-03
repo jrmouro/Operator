@@ -16,6 +16,7 @@ import com.jrmouro.genetic.integer.IntegerGeneticAlgorithm;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.generator.Generator;
 import java.io.IOException;
+import java.util.List;
 import org.apache.commons.math3.genetics.CrossoverPolicy;
 import org.apache.commons.math3.genetics.StoppingCondition;
 
@@ -68,10 +69,12 @@ public class GenOp extends RefOp {
                 public double fitness(ChromosomeAbstract<Integer> ca) {
 
                     int i = 0;
+                    
+                    List<Integer> repr = ca.getGenotype();
 
-                    Operator[] opers = new Operator[ca.getRepresentation().size()];
+                    Operator[] opers = new Operator[repr.size()];
 
-                    for (Integer integer : ca.getRepresentation()) {
+                    for (Integer integer : repr) {
                         int a = integer % operators.length;
                         if (operators[a].term()) {
                             opers[i++] = operators[a];
@@ -121,10 +124,12 @@ public class GenOp extends RefOp {
 
             IntegerChromosome chro = (IntegerChromosome) ga.run().getFittestChromosome();
 
-            Operator[] opers = new Operator[chro.getRepresentation().size()];
+            List<Integer> repr = chro.getGenotype();
+            
+            Operator[] opers = new Operator[repr.size()];
 
             int i = 0;
-            for (Integer integer : chro.getRepresentation()) {
+            for (Integer integer : repr) {
                 opers[i++] = operators[integer % operators.length].getCopy();
             }
 

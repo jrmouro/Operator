@@ -9,12 +9,12 @@ import com.jrmouro.operator.simple.Var;
 import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.chromosome.ChromosomeDouble;
-import com.jrmouro.genetic.chromosome.ChromosomeValidity;
 import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeTwo;
 import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.polynom.PolExpOpOp;
+import java.util.List;
 
 /**
  *
@@ -34,9 +34,11 @@ public class GenPolExpOpOp  extends PolExpOpOp {
 
         @Override
         public double fitness(ChromosomeAbstract<Double> chromosome) {
+            
+            List<Double> repr = chromosome.getGenotype();
 
             for (int j = 0; j < this.operator.getCoeffs().length; j++) {
-                this.operator.getCoeffs()[j].getVar().value = chromosome.getRepresentation().get(j);
+                this.operator.getCoeffs()[j].getVar().value = repr.get(j);
             }
             
             Double ret = 0.0;
@@ -87,9 +89,11 @@ public class GenPolExpOpOp  extends PolExpOpOp {
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
     }
@@ -123,9 +127,11 @@ public class GenPolExpOpOp  extends PolExpOpOp {
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
     }

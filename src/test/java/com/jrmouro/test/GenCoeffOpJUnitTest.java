@@ -7,7 +7,6 @@ package com.jrmouro.test;
 
 import com.jrmouro.operator.coeff.Coeff;
 import com.jrmouro.operator.genetic.GenCoeffOp;
-import com.jrmouro.operator.genetic.GenCoeffOpRangeValidity;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.plot.PlotOp;
 import com.jrmouro.operator.polynom.PolExpOp;

@@ -5,13 +5,13 @@
  */
 package com.jrmouro.test;
 
-import com.jrmouro.genetic.chromosome.ValidityRepresentation;
 import com.jrmouro.operator.genetic.GenPolExpOp;
 import com.jrmouro.operator.simple.Operator;
 import com.jrmouro.operator.plot.PlotOp;
 import com.jrmouro.operator.simple.Var;
 import java.util.List;
 import org.junit.Test;
+import com.jrmouro.genetic.chromosome.ValidityGenotype;
 
 /**
  *
@@ -41,9 +41,9 @@ public class GenPolOpJUnitTest {
                 var,
                 1,
                 data,
-                new ValidityRepresentation<Double>() {
+                new ValidityGenotype<Double>() {
                     @Override
-                    public boolean isValid(List<Double> representation) {
+                    public boolean isGenotypeValid(List<Double> representation) {
                         return true;
                     }
                     

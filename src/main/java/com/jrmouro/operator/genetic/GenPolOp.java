@@ -13,6 +13,7 @@ import com.jrmouro.genetic.evolutionstrategies.chromosome.ChromosomeTwo;
 import com.jrmouro.genetic.evolutionstrategies.evolution.EvolutionScoutSniffer;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.operator.polynom.PolOp;
+import java.util.List;
 
 /**
  *
@@ -32,9 +33,11 @@ public class GenPolOp extends PolOp {
 
         @Override
         public double fitness(ChromosomeAbstract<Double> chromosome) {
+            
+            List<Double> repr = chromosome.getGenotype();
 
             for (int j = 0; j < this.operator.getCoeffs().length; j++) {
-                this.operator.getCoeffs()[j].getVar().value = chromosome.getRepresentation().get(j);
+                this.operator.getCoeffs()[j].getVar().value = repr.get(j);
             }
             
             Double ret = 0.0;
@@ -83,9 +86,11 @@ public class GenPolOp extends PolOp {
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
     }
@@ -118,9 +123,11 @@ public class GenPolOp extends PolOp {
         ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
+        
+        List<Double> repr = chromosome.getGenotype();
 
         for (int j = 0; j < this.coeffs.length; j++) {
-            this.coeffs[j].getVar().value = chromosome.getRepresentation().get(j);
+            this.coeffs[j].getVar().value = repr.get(j);
         }
 
     }
