@@ -86,7 +86,7 @@ public class GenPolExpOpOp  extends PolExpOpOp {
 
         ChromosomeDouble first = new ChromosomeTwo(v, ff, sd, validity);
 
-        ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
+        ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff/*, limit*/).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
         
@@ -124,7 +124,7 @@ public class GenPolExpOpOp  extends PolExpOpOp {
 
         ChromosomeDouble first = new ChromosomeTwo(v, ff, sd, validity);
 
-        ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
+        ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff/*, limit*/).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
         

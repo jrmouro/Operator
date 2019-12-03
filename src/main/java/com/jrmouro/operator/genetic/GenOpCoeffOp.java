@@ -39,7 +39,7 @@ public class GenOpCoeffOp extends GenCoeffOp {
             int aritySelection,
             int nrGen,
             int sniff,
-            double limit,
+            //double limit,
             double sd,
             double[] dom, 
             double down, 
@@ -70,7 +70,7 @@ public class GenOpCoeffOp extends GenCoeffOp {
                 
                 nrGen,
                 sniff,
-                limit,
+                //limit,
                 sd,
                 dom,
                 down,

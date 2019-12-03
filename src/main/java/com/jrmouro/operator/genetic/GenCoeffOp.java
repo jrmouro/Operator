@@ -29,7 +29,7 @@ public class GenCoeffOp extends RefOp{
             Operator child,            
             int nrGen,
             int sniff, 
-            double limit,
+            //double limit,
             double sd,
             double[] dom, 
             double down, 
@@ -50,7 +50,7 @@ public class GenCoeffOp extends RefOp{
         
         ChromosomeDouble first = new ChromosomeOne(v, fitnessFunction, sd, validity2);
 
-        ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff, limit).evolve(first, nrGen, true);
+        ChromosomeAbstract<Double> chromosome = new EvolutionScoutSniffer(sniff/*, limit*/).evolve(first, nrGen, true);
 
         System.out.println(chromosome);
         
